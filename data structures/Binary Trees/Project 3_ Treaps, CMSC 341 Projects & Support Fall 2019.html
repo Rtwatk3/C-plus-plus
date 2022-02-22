@@ -1,0 +1,894 @@
+
+<!-- saved from url=(0066)https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3.shtml -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"> 
+   <title>
+      Project 3: Treaps,
+      CMSC 341 Projects &amp; Support Fall 2019
+   </title> 
+   <!-- <link rel="shortcut icon" href="../chang.ico"> -->
+   <link rel="stylesheet" type="text/css" href="./Project 3_ Treaps, CMSC 341 Projects &amp; Support Fall 2019_files/style-graph.css">
+   <script src="./Project 3_ Treaps, CMSC 341 Projects &amp; Support Fall 2019_files/latest.js.download" async=""></script>
+<script type="text/javascript" async="" src="./Project 3_ Treaps, CMSC 341 Projects &amp; Support Fall 2019_files/MathJax.js.download"></script><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover, .MJXp-munder {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > *, .MJXp-munder > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style><style type="text/css">.mjx-chtml {display: inline-block; line-height: 0; text-indent: 0; text-align: left; text-transform: none; font-style: normal; font-weight: normal; font-size: 100%; font-size-adjust: none; letter-spacing: normal; word-wrap: normal; word-spacing: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0; min-height: 0; border: 0; margin: 0; padding: 1px 0}
+.MJXc-display {display: block; text-align: center; margin: 1em 0; padding: 0}
+.mjx-chtml[tabindex]:focus, body :focus .mjx-chtml[tabindex] {display: inline-table}
+.mjx-full-width {text-align: center; display: table-cell!important; width: 10000em}
+.mjx-math {display: inline-block; border-collapse: separate; border-spacing: 0}
+.mjx-math * {display: inline-block; -webkit-box-sizing: content-box!important; -moz-box-sizing: content-box!important; box-sizing: content-box!important; text-align: left}
+.mjx-numerator {display: block; text-align: center}
+.mjx-denominator {display: block; text-align: center}
+.MJXc-stacked {height: 0; position: relative}
+.MJXc-stacked > * {position: absolute}
+.MJXc-bevelled > * {display: inline-block}
+.mjx-stack {display: inline-block}
+.mjx-op {display: block}
+.mjx-under {display: table-cell}
+.mjx-over {display: block}
+.mjx-over > * {padding-left: 0px!important; padding-right: 0px!important}
+.mjx-under > * {padding-left: 0px!important; padding-right: 0px!important}
+.mjx-stack > .mjx-sup {display: block}
+.mjx-stack > .mjx-sub {display: block}
+.mjx-prestack > .mjx-presup {display: block}
+.mjx-prestack > .mjx-presub {display: block}
+.mjx-delim-h > .mjx-char {display: inline-block}
+.mjx-surd {vertical-align: top}
+.mjx-mphantom * {visibility: hidden}
+.mjx-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 2px 3px; font-style: normal; font-size: 90%}
+.mjx-annotation-xml {line-height: normal}
+.mjx-menclose > svg {fill: none; stroke: currentColor}
+.mjx-mtr {display: table-row}
+.mjx-mlabeledtr {display: table-row}
+.mjx-mtd {display: table-cell; text-align: center}
+.mjx-label {display: table-row}
+.mjx-box {display: inline-block}
+.mjx-block {display: block}
+.mjx-span {display: inline}
+.mjx-char {display: block; white-space: pre}
+.mjx-itable {display: inline-table; width: auto}
+.mjx-row {display: table-row}
+.mjx-cell {display: table-cell}
+.mjx-table {display: table; width: 100%}
+.mjx-line {display: block; height: 0}
+.mjx-strut {width: 0; padding-top: 1em}
+.mjx-vsize {width: 0}
+.MJXc-space1 {margin-left: .167em}
+.MJXc-space2 {margin-left: .222em}
+.MJXc-space3 {margin-left: .278em}
+.mjx-chartest {display: block; visibility: hidden; position: absolute; top: 0; line-height: normal; font-size: 500%}
+.mjx-chartest .mjx-char {display: inline}
+.mjx-chartest .mjx-box {padding-top: 1000px}
+.MJXc-processing {visibility: hidden; position: fixed; width: 0; height: 0; overflow: hidden}
+.MJXc-processed {display: none}
+.mjx-test {font-style: normal; font-weight: normal; font-size: 100%; font-size-adjust: none; text-indent: 0; text-transform: none; letter-spacing: normal; word-spacing: normal; overflow: hidden; height: 1px}
+.mjx-test.mjx-test-display {display: table!important}
+.mjx-test.mjx-test-inline {display: inline!important; margin-right: -1px}
+.mjx-test.mjx-test-default {display: block!important; clear: both}
+.mjx-ex-box {display: inline-block!important; position: absolute; overflow: hidden; min-height: 0; max-height: none; padding: 0; border: 0; margin: 0; width: 1px; height: 60ex}
+.mjx-test-inline .mjx-left-box {display: inline-block; width: 0; float: left}
+.mjx-test-inline .mjx-right-box {display: inline-block; width: 0; float: right}
+.mjx-test-display .mjx-right-box {display: table-cell!important; width: 10000em!important; min-width: 0; max-width: none; padding: 0; border: 0; margin: 0}
+#MathJax_CHTML_Tooltip {background-color: InfoBackground; color: InfoText; border: 1px solid black; box-shadow: 2px 2px 5px #AAAAAA; -webkit-box-shadow: 2px 2px 5px #AAAAAA; -moz-box-shadow: 2px 2px 5px #AAAAAA; -khtml-box-shadow: 2px 2px 5px #AAAAAA; padding: 3px 4px; z-index: 401; position: absolute; left: 0; top: 0; width: auto; height: auto; display: none}
+.mjx-chtml .mjx-noError {line-height: 1.2; vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+.MJXc-TeX-unknown-R {font-family: STIXGeneral,'Cambria Math','Arial Unicode MS',serif; font-style: normal; font-weight: normal}
+.MJXc-TeX-unknown-I {font-family: STIXGeneral,'Cambria Math','Arial Unicode MS',serif; font-style: italic; font-weight: normal}
+.MJXc-TeX-unknown-B {font-family: STIXGeneral,'Cambria Math','Arial Unicode MS',serif; font-style: normal; font-weight: bold}
+.MJXc-TeX-unknown-BI {font-family: STIXGeneral,'Cambria Math','Arial Unicode MS',serif; font-style: italic; font-weight: bold}
+.MJXc-TeX-ams-R {font-family: MJXc-TeX-ams-R,MJXc-TeX-ams-Rw}
+.MJXc-TeX-cal-B {font-family: MJXc-TeX-cal-B,MJXc-TeX-cal-Bx,MJXc-TeX-cal-Bw}
+.MJXc-TeX-frak-R {font-family: MJXc-TeX-frak-R,MJXc-TeX-frak-Rw}
+.MJXc-TeX-frak-B {font-family: MJXc-TeX-frak-B,MJXc-TeX-frak-Bx,MJXc-TeX-frak-Bw}
+.MJXc-TeX-math-BI {font-family: MJXc-TeX-math-BI,MJXc-TeX-math-BIx,MJXc-TeX-math-BIw}
+.MJXc-TeX-sans-R {font-family: MJXc-TeX-sans-R,MJXc-TeX-sans-Rw}
+.MJXc-TeX-sans-B {font-family: MJXc-TeX-sans-B,MJXc-TeX-sans-Bx,MJXc-TeX-sans-Bw}
+.MJXc-TeX-sans-I {font-family: MJXc-TeX-sans-I,MJXc-TeX-sans-Ix,MJXc-TeX-sans-Iw}
+.MJXc-TeX-script-R {font-family: MJXc-TeX-script-R,MJXc-TeX-script-Rw}
+.MJXc-TeX-type-R {font-family: MJXc-TeX-type-R,MJXc-TeX-type-Rw}
+.MJXc-TeX-cal-R {font-family: MJXc-TeX-cal-R,MJXc-TeX-cal-Rw}
+.MJXc-TeX-main-B {font-family: MJXc-TeX-main-B,MJXc-TeX-main-Bx,MJXc-TeX-main-Bw}
+.MJXc-TeX-main-I {font-family: MJXc-TeX-main-I,MJXc-TeX-main-Ix,MJXc-TeX-main-Iw}
+.MJXc-TeX-main-R {font-family: MJXc-TeX-main-R,MJXc-TeX-main-Rw}
+.MJXc-TeX-math-I {font-family: MJXc-TeX-math-I,MJXc-TeX-math-Ix,MJXc-TeX-math-Iw}
+.MJXc-TeX-size1-R {font-family: MJXc-TeX-size1-R,MJXc-TeX-size1-Rw}
+.MJXc-TeX-size2-R {font-family: MJXc-TeX-size2-R,MJXc-TeX-size2-Rw}
+.MJXc-TeX-size3-R {font-family: MJXc-TeX-size3-R,MJXc-TeX-size3-Rw}
+.MJXc-TeX-size4-R {font-family: MJXc-TeX-size4-R,MJXc-TeX-size4-Rw}
+.MJXc-TeX-vec-R {font-family: MJXc-TeX-vec-R,MJXc-TeX-vec-Rw}
+.MJXc-TeX-vec-B {font-family: MJXc-TeX-vec-B,MJXc-TeX-vec-Bx,MJXc-TeX-vec-Bw}
+@font-face {font-family: MJXc-TeX-ams-R; src: local('MathJax_AMS'), local('MathJax_AMS-Regular')}
+@font-face {font-family: MJXc-TeX-ams-Rw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_AMS-Regular.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_AMS-Regular.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_AMS-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-cal-B; src: local('MathJax_Caligraphic Bold'), local('MathJax_Caligraphic-Bold')}
+@font-face {font-family: MJXc-TeX-cal-Bx; src: local('MathJax_Caligraphic'); font-weight: bold}
+@font-face {font-family: MJXc-TeX-cal-Bw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Caligraphic-Bold.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Caligraphic-Bold.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Caligraphic-Bold.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-frak-R; src: local('MathJax_Fraktur'), local('MathJax_Fraktur-Regular')}
+@font-face {font-family: MJXc-TeX-frak-Rw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Fraktur-Regular.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Fraktur-Regular.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Fraktur-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-frak-B; src: local('MathJax_Fraktur Bold'), local('MathJax_Fraktur-Bold')}
+@font-face {font-family: MJXc-TeX-frak-Bx; src: local('MathJax_Fraktur'); font-weight: bold}
+@font-face {font-family: MJXc-TeX-frak-Bw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Fraktur-Bold.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Fraktur-Bold.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Fraktur-Bold.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-math-BI; src: local('MathJax_Math BoldItalic'), local('MathJax_Math-BoldItalic')}
+@font-face {font-family: MJXc-TeX-math-BIx; src: local('MathJax_Math'); font-weight: bold; font-style: italic}
+@font-face {font-family: MJXc-TeX-math-BIw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Math-BoldItalic.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Math-BoldItalic.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Math-BoldItalic.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-sans-R; src: local('MathJax_SansSerif'), local('MathJax_SansSerif-Regular')}
+@font-face {font-family: MJXc-TeX-sans-Rw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_SansSerif-Regular.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_SansSerif-Regular.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_SansSerif-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-sans-B; src: local('MathJax_SansSerif Bold'), local('MathJax_SansSerif-Bold')}
+@font-face {font-family: MJXc-TeX-sans-Bx; src: local('MathJax_SansSerif'); font-weight: bold}
+@font-face {font-family: MJXc-TeX-sans-Bw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_SansSerif-Bold.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_SansSerif-Bold.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_SansSerif-Bold.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-sans-I; src: local('MathJax_SansSerif Italic'), local('MathJax_SansSerif-Italic')}
+@font-face {font-family: MJXc-TeX-sans-Ix; src: local('MathJax_SansSerif'); font-style: italic}
+@font-face {font-family: MJXc-TeX-sans-Iw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_SansSerif-Italic.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_SansSerif-Italic.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_SansSerif-Italic.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-script-R; src: local('MathJax_Script'), local('MathJax_Script-Regular')}
+@font-face {font-family: MJXc-TeX-script-Rw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Script-Regular.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Script-Regular.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Script-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-type-R; src: local('MathJax_Typewriter'), local('MathJax_Typewriter-Regular')}
+@font-face {font-family: MJXc-TeX-type-Rw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Typewriter-Regular.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Typewriter-Regular.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Typewriter-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-cal-R; src: local('MathJax_Caligraphic'), local('MathJax_Caligraphic-Regular')}
+@font-face {font-family: MJXc-TeX-cal-Rw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Caligraphic-Regular.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Caligraphic-Regular.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Caligraphic-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-main-B; src: local('MathJax_Main Bold'), local('MathJax_Main-Bold')}
+@font-face {font-family: MJXc-TeX-main-Bx; src: local('MathJax_Main'); font-weight: bold}
+@font-face {font-family: MJXc-TeX-main-Bw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Main-Bold.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Main-Bold.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Main-Bold.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-main-I; src: local('MathJax_Main Italic'), local('MathJax_Main-Italic')}
+@font-face {font-family: MJXc-TeX-main-Ix; src: local('MathJax_Main'); font-style: italic}
+@font-face {font-family: MJXc-TeX-main-Iw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Main-Italic.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Main-Italic.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Main-Italic.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-main-R; src: local('MathJax_Main'), local('MathJax_Main-Regular')}
+@font-face {font-family: MJXc-TeX-main-Rw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Main-Regular.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Main-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-math-I; src: local('MathJax_Math Italic'), local('MathJax_Math-Italic')}
+@font-face {font-family: MJXc-TeX-math-Ix; src: local('MathJax_Math'); font-style: italic}
+@font-face {font-family: MJXc-TeX-math-Iw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Math-Italic.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Math-Italic.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Math-Italic.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-size1-R; src: local('MathJax_Size1'), local('MathJax_Size1-Regular')}
+@font-face {font-family: MJXc-TeX-size1-Rw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Size1-Regular.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Size1-Regular.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Size1-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-size2-R; src: local('MathJax_Size2'), local('MathJax_Size2-Regular')}
+@font-face {font-family: MJXc-TeX-size2-Rw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Size2-Regular.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Size2-Regular.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Size2-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-size3-R; src: local('MathJax_Size3'), local('MathJax_Size3-Regular')}
+@font-face {font-family: MJXc-TeX-size3-Rw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Size3-Regular.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Size3-Regular.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Size3-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-size4-R; src: local('MathJax_Size4'), local('MathJax_Size4-Regular')}
+@font-face {font-family: MJXc-TeX-size4-Rw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Size4-Regular.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Size4-Regular.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Size4-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-vec-R; src: local('MathJax_Vector'), local('MathJax_Vector-Regular')}
+@font-face {font-family: MJXc-TeX-vec-Rw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Vector-Regular.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Vector-Regular.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Vector-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-vec-B; src: local('MathJax_Vector Bold'), local('MathJax_Vector-Bold')}
+@font-face {font-family: MJXc-TeX-vec-Bx; src: local('MathJax_Vector'); font-weight: bold}
+@font-face {font-family: MJXc-TeX-vec-Bw; src /*1*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/eot/MathJax_Vector-Bold.eot'); src /*2*/: url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/woff/MathJax_Vector-Bold.woff') format('woff'), url('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/fonts/HTML-CSS/TeX/otf/MathJax_Vector-Bold.otf') format('opentype')}
+</style></head> 
+
+<body><div id="MathJax_Message" style="display: none;"></div> 
+    <div id="wrapper">
+      <div id="header">
+	<h1>CMSC 341 Data Structures — Projects &amp; Support — Fall 2019</h1>
+        <div id="headerimg" class="donotprint"></div>
+	<div id="nav" class="donotprint">
+	  <ul>
+	    <li><a href="https://userpages.umbc.edu/~cmarron/cs341.f19/">Home</a></li>
+	    <li><a href="https://userpages.umbc.edu/~cmarron/cs341.f19/sections.shtml">Sections</a></li>
+	    <!-- <li><a href="../syllabus.shtml">Syllabus</a></li> -->
+	    <!-- <li><a href="../schedule.shtml">Schedule</a></li> -->
+	    <!-- <li><a href="../homework/">Homework</a></li> -->
+	    <li><a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/">Projects</a></li>
+	    <li><a href="https://userpages.umbc.edu/~cmarron/cs341.f19/staff/">TA Support</a></li>
+	    <li><a href="https://userpages.umbc.edu/~cmarron/cs341.f19/resources/">Resources</a></li>
+	    <li><a href="https://userpages.umbc.edu/~cmarron/cs341.f19/faq.shtml">FAQ</a></li>
+	  </ul>
+	</div>
+     </div>
+     <div id="content">
+
+<!-- END HEADER -->
+
+
+
+
+<h1>Project 3: Treaps</h1>
+
+<h2>Due: Tuesday, November 5, before 9:00 pm</h2>
+
+<hr>
+<h2>Addenda</h2>
+<ul>
+  <li>
+    The original version
+    of <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3files/treap.h"><tt>treap.h</tt></a> included my
+    declarations of private helper functions, some of which are not
+    relevant to the project.  It has been corrected.  The original
+    version is still available and has been
+    renamed <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3files/treap_old.h"><tt>treap_old.h</tt></a>.
+  </li>
+  <li>
+    The original version
+    of <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3files/treap.h"><tt>treap.h</tt></a> was
+    missing <tt>#include &lt;limits&gt;</tt>.  It has been corrected.
+  </li>
+</ul>
+
+<hr>
+<h2>Objectives</h2>
+
+<p>
+  The objectives of this programming assignment are:
+</p>
+<ul>
+  <li>
+    Practice constructing and using binary search trees.
+  </li>
+  <li>
+    Practice writing basic rebalancing routines (single rotations).
+  </li>
+</ul>
+ 
+<hr>
+<h2 id="intro">Introduction</h2> 
+
+<p>
+  A <em>treap</em> is a combination of a binary search tree (BST) and
+  a heap.  You should be very familiar with BSTs at this point in the
+  semester, but you probably haven't encountered heaps yet.  For this
+  project, you only need two concepts from heaps:
+</p>
+<ul>
+  <li>
+    Each node of the tree, in addition to holding a data value, will
+    also store an integer <em>priority value</em>.  Priority values
+    should be unique; that is, no two nodes should have the same
+    priority.
+  </li>
+  <li>
+    The tree must have the <em>Max-Heap Property</em>: for any node
+    <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-1-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 108%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;w&lt;/mi&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-1" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-2" class="mjx-mrow"><span id="MJXc-Node-3" class="mjx-mi"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.234em; padding-bottom: 0.292em;">w</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>w</mi></math></span></span><script type="math/tex" id="MathJax-Element-1">w</script> in the tree, the priority of <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-2-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 108%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;w&lt;/mi&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-4" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-5" class="mjx-mrow"><span id="MJXc-Node-6" class="mjx-mi"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.234em; padding-bottom: 0.292em;">w</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>w</mi></math></span></span><script type="math/tex" id="MathJax-Element-2">w</script> must be greater than the
+    priorities of its two children.
+  </li>
+</ul>
+<p>
+  The following figure shows a treap in which the data are letters (or
+  strings) and the priorities are integers.
+</p>
+
+<figure id="treapex">
+  <img src="./Project 3_ Treaps, CMSC 341 Projects &amp; Support Fall 2019_files/sample_treap.gif">
+  <figcaption>
+  Sample Treap with String Data and Integer Priorities<br>
+  <small>(Image source: http://cseweb.ucsd.edu/~kube/cls/100/Lectures/lec5/lec5-2.html#pgfId-955731)</small>
+</figcaption>  
+</figure>
+<p>
+  A treap must be both a BST <em>and</em> have the max-heap property,
+  which means insertions and deletions must check that the max-heap
+  property holds and fix the tree if it does not.  It will turn out
+  that this is not as bad as it sounds.  The max-heap property can
+  always be repaired by applying single rotations.
+</p>
+
+<p><b>Tree Rotations</b></p>
+
+<p>
+  Single tree rotations are local modification to a tree that can be
+  used to repair violations of the max-heap property while maintaining
+  the BST structure.  The restructurings that can be achieved using
+  single rotations are a subset of those possible with trinode
+  restructuring.  The figure below illustrates left and right single
+  rotations.
+</p>
+  
+  
+<figure>
+<img src="./Project 3_ Treaps, CMSC 341 Projects &amp; Support Fall 2019_files/rotations.gif" alt="Tree Rotations">
+<figcaption>
+  Left and Right Single Rotations <br>
+  <small>(Image source: http://cseweb.ucsd.edu/~kube/cls/100/Lectures/lec5/lec5-5.html#pgfId-955859)</small>
+</figcaption>
+</figure>
+
+<p>
+  It is not difficult to see that rotations preserve the BST ordering:
+  in both images, we have <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-3-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 108%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mo&gt;&amp;lt;&lt;/mo&gt;&lt;mi&gt;Y&lt;/mi&gt;&lt;mo&gt;&amp;lt;&lt;/mo&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;mo&gt;&amp;lt;&lt;/mo&gt;&lt;mi&gt;X&lt;/mi&gt;&lt;mo&gt;&amp;lt;&lt;/mo&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-7" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-8" class="mjx-mrow"><span id="MJXc-Node-9" class="mjx-mi"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.234em; padding-bottom: 0.292em;">a</span></span><span id="MJXc-Node-10" class="mjx-mo MJXc-space3"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.234em; padding-bottom: 0.408em;">&lt;</span></span><span id="MJXc-Node-11" class="mjx-mi MJXc-space3"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.466em; padding-bottom: 0.292em; padding-right: 0.182em;">Y</span></span><span id="MJXc-Node-12" class="mjx-mo MJXc-space3"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.234em; padding-bottom: 0.408em;">&lt;</span></span><span id="MJXc-Node-13" class="mjx-mi MJXc-space3"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.466em; padding-bottom: 0.292em;">b</span></span><span id="MJXc-Node-14" class="mjx-mo MJXc-space3"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.234em; padding-bottom: 0.408em;">&lt;</span></span><span id="MJXc-Node-15" class="mjx-mi MJXc-space3"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.466em; padding-bottom: 0.292em; padding-right: 0.024em;">X</span></span><span id="MJXc-Node-16" class="mjx-mo MJXc-space3"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.234em; padding-bottom: 0.408em;">&lt;</span></span><span id="MJXc-Node-17" class="mjx-mi MJXc-space3"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.234em; padding-bottom: 0.292em;">c</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>a</mi><mo>&lt;</mo><mi>Y</mi><mo>&lt;</mo><mi>b</mi><mo>&lt;</mo><mi>X</mi><mo>&lt;</mo><mi>c</mi></math></span></span><script type="math/tex" id="MathJax-Element-3">a < Y < b < X < c</script>, and we assume that
+  the subtrees <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-4-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 108%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-18" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-19" class="mjx-mrow"><span id="MJXc-Node-20" class="mjx-mi"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.234em; padding-bottom: 0.292em;">a</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>a</mi></math></span></span><script type="math/tex" id="MathJax-Element-4">a</script>, <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-5-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 108%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-21" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-22" class="mjx-mrow"><span id="MJXc-Node-23" class="mjx-mi"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.466em; padding-bottom: 0.292em;">b</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>b</mi></math></span></span><script type="math/tex" id="MathJax-Element-5">b</script>, and <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-6-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 108%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-24" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-25" class="mjx-mrow"><span id="MJXc-Node-26" class="mjx-mi"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.234em; padding-bottom: 0.292em;">c</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>c</mi></math></span></span><script type="math/tex" id="MathJax-Element-6">c</script> were constructed correctly
+  before the rotation occured.  How dow we use rotations to make local
+  fixes to the max-heap property? Suppose that in the left picture,
+  the priority of <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-7-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 108%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;Y&lt;/mi&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-27" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-28" class="mjx-mrow"><span id="MJXc-Node-29" class="mjx-mi"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.466em; padding-bottom: 0.292em; padding-right: 0.182em;">Y</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Y</mi></math></span></span><script type="math/tex" id="MathJax-Element-7">Y</script> were higher than the priority of <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-8-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 108%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;X&lt;/mi&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-30" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-31" class="mjx-mrow"><span id="MJXc-Node-32" class="mjx-mi"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.466em; padding-bottom: 0.292em; padding-right: 0.024em;">X</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>X</mi></math></span></span><script type="math/tex" id="MathJax-Element-8">X</script>,
+  violating the max-heap property; then a right rotation would make
+  <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-9-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 108%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;Y&lt;/mi&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-33" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-34" class="mjx-mrow"><span id="MJXc-Node-35" class="mjx-mi"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.466em; padding-bottom: 0.292em; padding-right: 0.182em;">Y</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Y</mi></math></span></span><script type="math/tex" id="MathJax-Element-9">Y</script> the parent of <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-10-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 108%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;X&lt;/mi&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-36" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-37" class="mjx-mrow"><span id="MJXc-Node-38" class="mjx-mi"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.466em; padding-bottom: 0.292em; padding-right: 0.024em;">X</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>X</mi></math></span></span><script type="math/tex" id="MathJax-Element-10">X</script>, correcting the error.  
+</p>
+
+<p>
+  We can use single rotations, along with standard BST operations, to
+  maintain a treap.  
+</p>
+<ul>
+  <li>
+    <p>
+      <b>Insertion</b>: suppose we have a value-priority pair <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-11-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 108%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-39" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-40" class="mjx-mrow"><span id="MJXc-Node-41" class="mjx-mo"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.466em; padding-bottom: 0.582em;">(</span></span><span id="MJXc-Node-42" class="mjx-mi"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.234em; padding-bottom: 0.292em;">v</span></span><span id="MJXc-Node-43" class="mjx-mo"><span class="mjx-char MJXc-TeX-main-R" style="margin-top: -0.171em; padding-bottom: 0.524em;">,</span></span><span id="MJXc-Node-44" class="mjx-mi MJXc-space1"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.234em; padding-bottom: 0.466em;">p</span></span><span id="MJXc-Node-45" class="mjx-mo"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.466em; padding-bottom: 0.582em;">)</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo stretchy="false">(</mo><mi>v</mi><mo>,</mo><mi>p</mi><mo stretchy="false">)</mo></math></span></span><script type="math/tex" id="MathJax-Element-11">(v,
+      p)</script> that we wish to insert into a treap.  Assume that <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-12-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 108%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-46" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-47" class="mjx-mrow"><span id="MJXc-Node-48" class="mjx-mi"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.234em; padding-bottom: 0.466em;">p</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>p</mi></math></span></span><script type="math/tex" id="MathJax-Element-12">p</script> is
+      unique.  We first perform a normal BST insertion, which creates
+      a new leaf node. Then, if <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-13-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 108%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-49" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-50" class="mjx-mrow"><span id="MJXc-Node-51" class="mjx-mi"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.234em; padding-bottom: 0.466em;">p</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>p</mi></math></span></span><script type="math/tex" id="MathJax-Element-13">p</script> is greater than the priority of
+      the parent, we do a left or right single roation to move <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-14-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 108%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-52" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-53" class="mjx-mrow"><span id="MJXc-Node-54" class="mjx-mo"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.466em; padding-bottom: 0.582em;">(</span></span><span id="MJXc-Node-55" class="mjx-mi"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.234em; padding-bottom: 0.292em;">v</span></span><span id="MJXc-Node-56" class="mjx-mo"><span class="mjx-char MJXc-TeX-main-R" style="margin-top: -0.171em; padding-bottom: 0.524em;">,</span></span><span id="MJXc-Node-57" class="mjx-mi MJXc-space1"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.234em; padding-bottom: 0.466em;">p</span></span><span id="MJXc-Node-58" class="mjx-mo"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.466em; padding-bottom: 0.582em;">)</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo stretchy="false">(</mo><mi>v</mi><mo>,</mo><mi>p</mi><mo stretchy="false">)</mo></math></span></span><script type="math/tex" id="MathJax-Element-14">(v,
+      p)</script> up in the tree.
+    </p>
+    <p>
+      Now <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-15-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 108%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-59" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-60" class="mjx-mrow"><span id="MJXc-Node-61" class="mjx-mo"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.466em; padding-bottom: 0.582em;">(</span></span><span id="MJXc-Node-62" class="mjx-mi"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.234em; padding-bottom: 0.292em;">v</span></span><span id="MJXc-Node-63" class="mjx-mo"><span class="mjx-char MJXc-TeX-main-R" style="margin-top: -0.171em; padding-bottom: 0.524em;">,</span></span><span id="MJXc-Node-64" class="mjx-mi MJXc-space1"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.234em; padding-bottom: 0.466em;">p</span></span><span id="MJXc-Node-65" class="mjx-mo"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.466em; padding-bottom: 0.582em;">)</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo stretchy="false">(</mo><mi>v</mi><mo>,</mo><mi>p</mi><mo stretchy="false">)</mo></math></span></span><script type="math/tex" id="MathJax-Element-15">(v,p)</script> will have a new parent, and it is possible that
+      <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-16-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 108%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-66" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-67" class="mjx-mrow"><span id="MJXc-Node-68" class="mjx-mi"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.234em; padding-bottom: 0.466em;">p</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>p</mi></math></span></span><script type="math/tex" id="MathJax-Element-16">p</script> is still larger than the new parent's priority, in which
+      case we perform another rotation; repeat, moving <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-17-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 108%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-69" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-70" class="mjx-mrow"><span id="MJXc-Node-71" class="mjx-mo"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.466em; padding-bottom: 0.582em;">(</span></span><span id="MJXc-Node-72" class="mjx-mi"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.234em; padding-bottom: 0.292em;">v</span></span><span id="MJXc-Node-73" class="mjx-mo"><span class="mjx-char MJXc-TeX-main-R" style="margin-top: -0.171em; padding-bottom: 0.524em;">,</span></span><span id="MJXc-Node-74" class="mjx-mi MJXc-space1"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.234em; padding-bottom: 0.466em;">p</span></span><span id="MJXc-Node-75" class="mjx-mo"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.466em; padding-bottom: 0.582em;">)</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo stretchy="false">(</mo><mi>v</mi><mo>,</mo><mi>p</mi><mo stretchy="false">)</mo></math></span></span><script type="math/tex" id="MathJax-Element-17">(v,p)</script> up
+      the tree, until the max-heap property is satisfied at each node.
+    </p>
+  </li>
+  <li>
+    <p>
+      <b>Deletion</b>: suppose we wish to remove the node with value
+      <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-18-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 108%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-76" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-77" class="mjx-mrow"><span id="MJXc-Node-78" class="mjx-mi"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.234em; padding-bottom: 0.292em;">v</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>v</mi></math></span></span><script type="math/tex" id="MathJax-Element-18">v</script>.  We begin with a normal BST search to see if <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-19-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 108%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-79" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-80" class="mjx-mrow"><span id="MJXc-Node-81" class="mjx-mi"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.234em; padding-bottom: 0.292em;">v</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>v</mi></math></span></span><script type="math/tex" id="MathJax-Element-19">v</script> is in
+      fact in the tree; if not, do nothing.
+    </p>
+    <p>
+      If we find <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-20-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 108%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-82" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-83" class="mjx-mrow"><span id="MJXc-Node-84" class="mjx-mi"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.234em; padding-bottom: 0.292em;">v</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>v</mi></math></span></span><script type="math/tex" id="MathJax-Element-20">v</script> and it is a leaf node, we can simply delete the
+      node.  If it is not a leaf node, perform a sequence of left and
+      right rotations to move <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-21-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 108%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-85" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-86" class="mjx-mrow"><span id="MJXc-Node-87" class="mjx-mi"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.234em; padding-bottom: 0.292em;">v</span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>v</mi></math></span></span><script type="math/tex" id="MathJax-Element-21">v</script> down the tree until it is a leaf,
+      and then delete it.  When performing the rotations, you should
+      choose the direction (left or right) that moves the child with
+      largest priority higher in the tree.
+    </p>
+</li></ul>
+
+<p>
+  So why bother with treaps?  One interesting fact is that if we build
+  a treap using random priorities it will almost always be balanced
+  (meaning, balanced with high probability); at the same time, treaps
+  are easier to implement than balanced trees such as AVL or red-black
+  trees.  Also, there are other operations that can be performed
+  efficiently on treaps, such as joining two treaps to create a single
+  combined treap, or splitting a treap into two treaps.
+</p>
+
+<p>
+  A good reference for additional information is
+  this <a href="http://cseweb.ucsd.edu/~kube/cls/100/Lectures/lec5/lec5.html">lecture
+  on treaps from UCSD</a>.
+</p>
+
+<hr>
+<h2>Assignment</h2>
+
+<p>
+  Your assignment is to implement the <tt>Treap</tt> class using
+  single rotation method described in
+  the <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3.shtml#intro">Introduction</a> to maintain the treap
+  properties.  You must use the
+  provided <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3files/treap.h"><tt>treap.h</tt></a>
+  and <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3files/treap.cpp"><tt>treap.cpp</tt></a> files.
+  You may not modify the public function declarations or private data,
+  but you may add private helper functions.
+</p>
+
+<p>
+  Although several test programs are provided, you are responsible for
+  thoroughly testing your program. It is particularly important that
+  your code run without segmentation faults, memory leaks, or memory
+  errors.  Memory leaks are considered as bad as segmentation fault
+  since many segmentation faults are caused by poorly written
+  destructors. A program with a poorly written destructor might avoid
+  some segmentation faults but will leak memory horribly. Memory leaks
+  will incur a penalty similar to that of a segmentation fault.
+</p>
+
+<p>
+  Following is a alist of member functions that must be implemented.
+  Some of these functions are already implemented (or partially
+  implemented)
+  in <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3files/treap.cpp%3E"><tt>treap.cpp</tt></a>; others
+  will need to be written from scratch.  Any helper functions that you
+  write must be private and must be declared
+  in <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3files/treap.h"><tt>treap.h</tt></a>.
+</p>
+
+<ul>
+  <li>
+    <p>
+      A default constructor with the signature:
+    </p>
+<p></p><pre class="code">   Treap::Treap() ;
+</pre><p></p>
+    <p>
+      <b>Note:</b> An implementation of this methods is provided
+      in <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3files/treap.cpp"><tt>treap.cpp</tt></a>.
+    </p>
+    <p>
+      The default constructor must create a <tt>Treap</tt> object that
+      is ready for treap operations such insertion, removal, search,
+      and inorder traversal.  Even an empty tree should behave
+      properly when its methods are called.
+    </p>
+  </li>
+  <li>
+    <p>
+      A copy constructor with the signature:
+    </p>
+<p></p><pre class="code">   Treap::Treap(const Treap&amp; other) ;
+</pre><p></p>
+    <p>
+      The copy constructor must make a deep copy and create a new
+      object that has its own allocated memory.
+    </p>
+  </li>
+  <li>
+    <p>
+      A destructor with the signature:
+</p><p></p><pre class="code">   Treap::~Treap() ;
+</pre><p></p>
+    <p>
+      The destructor must completely free all memory allocated for the
+      object.  (Use <tt>valgrind</tt> on GL to check for memory
+      leaks.)
+    </p>
+  </li>
+  <li>
+    <p>
+      An overloaded assignment operator with the signature:
+    </p>
+<p></p><pre class="code">   const Treap&amp; Treap::operator=(const Treap&amp; rhs) ;
+</pre><p></p>
+    <p>
+      The assignment operator must deallocate memory used by the host
+      object and then make deep copy of <tt>rhs</tt>.
+    </p>
+  </li>
+
+  <li>
+    <p>
+      A function that deterimes if the treap is empty having the
+      following signature:
+    </p>
+<p></p><pre class="code">   bool Treap::empty() const;	   
+</pre><p></p>
+    <p>
+      <b>Note:</b> An implementation of this methods is provided
+      in <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3files/treap.cpp"><tt>treap.cpp</tt></a>.
+    </p>
+    <p>
+      The <tt>empty()</tt> function should return <tt>true</tt> if the
+      tree is empty and <tt>false</tt> otherwise.
+    </p>
+  </li>
+
+  <li>
+    <p>
+      A function that returns the height of the tree.  It should have
+      the following signature:
+    </p>
+<p></p><pre class="code">   int Treap::height() const;
+</pre><p></p>
+    <p>
+      <b>Note:</b> An implementation of this methods is provided
+      in <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3files/treap.cpp"><tt>treap.cpp</tt></a>.
+    </p>
+    <p>
+      The <tt>height()</tt> function should return the height of the
+      tree.  The height is stored in the <tt>TreapNode</tt> pointed to
+      by the treap object and must be maintained by the node insertion
+      and removal methods.
+    </p>
+  </li>
+
+  <li>
+    <p>
+      A function that returns the priority of the node.  The priority
+      function should should have the signature:
+    </p>
+<p></p><pre class="code">   priority_t Treap::priority() const;
+</pre><p></p>
+    <p>
+      <b>Note:</b> An implementation of this methods is provided
+      in <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3files/treap.cpp"><tt>treap.cpp</tt></a>.
+    </p>
+    <p>
+      The <tt>priority()</tt> function should return the priority
+      stored in the <tt>TreapNode</tt> object.
+    </p>
+  </li>
+  
+  <li> 
+    <p>
+      An insertion function that adds a data-priority pair
+      to <tt>Treap</tt> and has the following signature:
+    </p>
+<p></p><pre class="code">   void Treap::insert( data_t data, priority_t pri ) ;
+</pre><p></p>
+    <p>
+      The <tt>insert()</tt> function must maintain the treap
+      properties (BST with max-heap property) and run in time
+      proportional to the height of the treap. Your implementation
+      must not allow duplicate data values.  If the <tt>insert()</tt>
+      function is invoked with a data value that already stored in
+      the <tt>Treap</tt>, your <tt>insert()</tt> function should do
+      nothing.
+    </p>
+  </li>
+
+  <li> 
+    <p>
+      A treap removal function that finds and removes an item with the
+      given data value.  The <tt>remove()</tt> function should return
+      a boolean value that indicates whether the data value was found;
+      it should not abort or throw an exception when the key is not
+      stored in the BST.  The <tt>remove()</tt> member function must
+      have the following signature:
+    </p>
+<p></p><pre class="code">   bool Treap::remove(data_t data) ;
+</pre><p></p>
+    <p>
+      For full credit, your <tt>remove()</tt> method must run in time
+      proportional to the height of the tree.
+    </p>
+  </li>
+
+  <li>
+    <p>
+      A find function that reports whether the given data value is
+      stored in the tree.  The signature of the <tt>find()</tt> method
+      must be:
+    </p>
+<p></p><pre class="code">   const data_t* Treap::find(const data_t&amp; x) ;
+</pre><p></p>
+    <p>
+      If the data value <tt>x</tt> is found, <tt>find()</tt> returns a
+      pointer to the corresponding data value; otherwise it
+      returns <tt>nullptr</tt>.  Your <tt>find()</tt> method must run
+      in time proportional to the height of the tree.
+    </p>
+  </li>
+
+  <li> 
+    <p>
+      A member function <tt>inorder()</tt> that performs an inorder
+      traversal and prints the data in a specified format.  It must
+      have the following signature:
+    </p>
+<p></p><pre class="code">   void Treap::inorder() ;
+</pre><p></p>
+    <p>
+      <b>Note:</b> An implementation of this methods is provided
+      in <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3files/treap.cpp"><tt>treap.cpp</tt></a>.
+    </p>
+    <p>
+      The <tt>inorder()</tt> methods visits each node using an inorder
+      traversal, prints out the data, followed by a <tt>:</tt>,
+      followed by the priority, then another <tt>:</tt>, and then the
+      height of the node.  It also prints an open parenthesis before
+      visiting the left subtree and a close parenthesis after visiting
+      the right subtree. Nothing is printed when <tt>inorder()</tt> is
+      called on an empty tree, not even parentheses.  This function
+      will be used for grading and is useful for debugging.
+    </p>
+    <p>
+      For example, calling <tt>inorder()</tt> on
+      the <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3.shtml#treapex">sample treap from the introduction</a>
+      should produce the string:
+    </p>
+    <p>
+      <tt>
+	((((A:21:0)B:24:1)C:35:2((D:8:0)E:33:1))G:50:5(H:29:4(I:25:3((J:13:1(K:9:0))L:16:2))))
+      </tt>
+    </p>
+    <figure>
+      <img src="./Project 3_ Treaps, CMSC 341 Projects &amp; Support Fall 2019_files/sample_treap.gif">
+      <figcaption>
+	Sample Treap with String Data and Integer Priorities<br>
+	<small>(Image source: http://cseweb.ucsd.edu/~kube/cls/100/Lectures/lec5/lec5-2.html#pgfId-955731)</small>
+      </figcaption>  
+    </figure>
+    <p>
+      Here, the <tt>G:50:5</tt> indicates that the node with data
+      “G” and priority 50 has height 5.  The output
+      before <tt>G:50:5</tt> is produced by visiting the left subtree,
+      and everything after <tt>G:50:5</tt> is produced by visiting the
+      right subtree.
+    </p>
+  </li>
+
+  <li>
+    <p>
+      A function <tt>locate()</tt> that returns whether there is a
+      node in a particular position of the <tt>Treap</tt> and stores
+      the data, priority, and height in reference parameters.  The
+      function must have the signature:
+    </p>
+<p></p><pre class="code">   bool Treap::locate(const char position[], data_t&amp; x, priority_t&amp; p, int&amp; h, int offset=0) ;
+</pre><p></p>
+    <p>
+      <b>Note:</b> An implementation of this methods is provided
+      in <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3files/treap.cpp"><tt>treap.cpp</tt></a>.
+    </p>
+    <p>
+      The position is given by a constant C-string, where a character
+      <tt>L</tt> indicates left and a character <tt>R</tt>
+      indicates right.
+    </p>
+    <p>
+      For example in the treap above:
+      </p><ul>
+	<li>
+	  A call to <tt>locate("LRL", data)</tt> should
+	  return <tt>true</tt> and store <tt>D</tt> in <tt>data</tt>.
+	</li>
+	<li>
+	  A call to <tt>locate("RRRL", data)</tt> should return
+	  <tt>true</tt> and store <tt>J</tt> in <tt>data</tt>.
+	</li>
+	<li>
+	  A call to <tt>locate("RLR", data)</tt> should return 
+	  <tt>false</tt> and not make any changes to <tt>data</tt>
+	  since there is no node in that
+	  position. <br> <b>Note:</b> <tt>locate()</tt> must not abort
+	  and must not throw an exception in this situation.
+	</li>
+	<li>
+	  A call to <tt>locate("", data)</tt> should
+	  return <tt>true</tt> and store <tt>G</tt> in <tt>data</tt>,
+	  since the empty string indicates the root of tree.
+	</li>
+      </ul>
+    <p></p>
+    <p>
+      The grading programs will use <tt>locate()</tt> to check if your
+      treap is correct.
+    </p>
+  </li>
+  <li>
+    <p>
+      A dump function that prints information about all the nodes in
+      the tree.  The function must have the signature:
+    </p>
+<p></p><pre class="code">   void Treap::dump() ;
+</pre><p></p>
+   <p>
+      <b>Note:</b> An implementation of this methods is provided
+      in <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3files/treap.cpp"><tt>treap.cpp</tt></a>.
+   </p>
+   <p>
+     Sample output from the <tt>dump()</tt> called on the sample treap
+     is provided
+     in <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3files/dump_sample.txt"><tt>dump_sample.txt</tt></a>.
+   </p>
+</li></ul>
+
+<hr>
+<h2>Additional Requirements</h2>
+
+<p>
+  <b>Requirement:</b> You must use the
+  supplied <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3files/treap.h"><tt>treap.h</tt></a>
+  and <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3files/treap.cpp"><tt>treap.cpp</tt></a> files.
+  You may not modify any of the public method prototypes or private
+  data, although you may add private functions.
+</p>
+
+<p>
+  <b>Requirement:</b> Your <tt>find()</tt>, <tt>insert()</tt>
+  and <tt>remove()</tt> methods must all run in time proportional to
+  the height of the treap.
+</p>
+
+<p>
+  <b>Requirement:</b> Your implementation must not permit duplicate
+  data values.  If an attempt is made to insert a duplicate
+  value, <tt>insert()</tt> should leave the treap unchanged; it
+  should <em>not</em> throw an exception or cause the program to
+  crash.
+</p>
+
+<p>
+  <b>Requirement:</b> The treap properties must hold after any call
+  to <tt>insert()</tt> or <tt>remove()</tt>.  These commands must
+  produce a valid treap.
+</p>
+
+<p>
+  <b>Requirement:</b> Your code must use single rotations as described
+  in the <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3.shtml#intro">Introduction</a> to maintain the treap
+  properties.
+</p>
+
+<p>
+  <b>Requirement:</b> Except for <tt>insert()</tt>, the provided
+  function implementations should not be modified.
+</p>
+
+<hr>
+<h2>Provided Programs</h2>
+
+
+<p>
+  The provided class
+  files, <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3files/treap.h"><tt>treap.h</tt></a>
+  and <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3files/treap.cpp"><tt>treap.cpp</tt></a>, comprise
+  a partial implementation of a BST, providing a
+  constructor, <tt>insert()</tt> function, and <tt>inorder()</tt>
+  traversal, and it is possible to create and print a BST with no
+  additional code.  The following driver is provided:
+  </p><ul>
+    <li>
+      <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3files/driver.cpp"><tt>driver.cpp</tt></a> —
+      simple driver for the basic BST implementation.
+    </li>
+  </ul>
+  
+<p>
+  Several sample test programs for the <tt>Treap</tt> class are
+  provided below.  However, it is your responsibility to write
+  additional tests to ensure that your implementation is correct.
+</p>
+
+<!-- <p> -->
+<!--   <b>Note:</b> your output may differ from the sample out provided as there -->
+<!--   are various correct implementations of <tt>remove()</tt> -->
+<!--   and <tt>rebalance()</tt>. -->
+<!-- </p> -->
+
+<ul>
+  <li>
+    Builds the <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3.shtml#treapex">treap from the
+    Introduction</a>. <br>
+    <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3files/test0.cpp"><tt>test0.cpp</tt></a> <br>
+    Sample output: <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3files/test0.txt"><tt>test0.txt</tt></a>
+  </li>
+  <li>
+    Builds the <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3.shtml#treapex">treap from the Introduction</a> and
+    then deletes “K” and “C”.<br>
+    <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3files/test1.cpp"><tt>test1.cpp</tt></a> <br>
+    Sample outptu: <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3files/test1.txt"><tt>test1.txt</tt></a>
+  </li>
+  <li>
+    Test of the copy constructor.<br>
+    <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3files/test2.cpp"><tt>test2.cpp</tt></a> <br>
+    Sample output: <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3files/test2.txt"><tt>test2.txt</tt></a>
+  </li>
+  <li>
+    Test of the assignment operator.<br>
+    <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3files/test3.cpp"><tt>test3.cpp</tt></a> <br>
+    Sample output: <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3files/test3.txt"><tt>test3.txt</tt></a>
+  </li>
+  <li>
+    Test of the <tt>locate()</tt> function.<br>
+    <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3files/test4.cpp"><tt>test4.cpp</tt></a> <br>
+    Sample output: <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/proj3files/test4.txt"><tt>test4.txt</tt></a>
+  </li>
+</ul>
+
+
+<!-- <HR> -->
+<!-- <h2>Implementation Notes</h2>  -->
+
+<!-- <ul> -->
+<!--   <li> -->
+<!--     Running time is one of the most important considerations in the -->
+<!--     implementation of a data structure. Programs that produce the -->
+<!--     desired output but exceed the required running times are -->
+<!--     considered <em>wrong</em> implementations and will receive -->
+<!--     substantial deductions during grading. -->
+<!--   </li> -->
+<!--   <li> -->
+<!--     The height of a leaf node is zero.  In this implementation, leaf -->
+<!--     nodes contain data but have no left or right children; this -->
+<!--     differs from the textbook in which leaf nodes do not store data. -->
+<!--   </li> -->
+<!-- </ul> -->
+
+
+<hr>
+<h2>What to Submit</h2>
+
+<p>
+  You must submit the following files to the <tt>proj3</tt> directory.
+</p>
+<ul>
+  <li> <tt>treap.h</tt> </li>
+  <li> <tt>treap.cpp</tt> </li>
+</ul>
+
+<p>
+  If you followed the instructions in
+  the <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/projects/submission.shtml">Project Submission</a> page to set up
+  your directories, you can submit your code using this Unix command
+  command.
+</p>
+<p></p><xmp class="code">   cp treap.h treap.cpp ~/cs341proj/proj3/
+</xmp>
+<p></p>
+
+      </div>
+      <div id="footer" class="donotprint">
+        <div>
+          <a href="https://userpages.umbc.edu/~cmarron/cs341.f19/index.shtml">CMSC 341 — Fall 2019 </a>
+        </div>
+        <a href="http://www.csee.umbc.edu/">CSEE</a> |
+        <a href="http://www.umbc.edu/">UMBC</a>
+      </div>
+    </div>
+
+
+
+</body></html>
